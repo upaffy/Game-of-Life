@@ -12,32 +12,32 @@ from ui import UI
 class GUI(UI):
     def __init__(self, life: GameOfLife, cell_size: int = 10, speed: int = 10) -> None:
         self.life = life
-        # количество ячеек по горизонтали
+        # number of cells horizontally
         self.cell_width = self.life.cols
-        # количество ячеек по вертикали
+        # number of cells vertically
         self.cell_height = self.life.rows
-        # ширина окна
+        # window width
         self.width = self.cell_width * cell_size
-        # высота окна
+        # window height
         self.height = self.cell_height * cell_size
-        # размер клетки
+
         self.cell_size = cell_size
-        # скорость
         self.speed = speed
-        # размеры окна
+
         self.screen_size = self.width, self.height
-        # создание нового окна
+        # creating a new window
         self.screen = pygame.display.set_mode(self.screen_size)
         super().__init__(life)
 
     def draw_lines(self) -> None:
-        """ Отрисовать сетку """
+        """Drawing grid lines"""
         for x in range(0, self.width, self.cell_size):
             pygame.draw.line(self.screen, pygame.Color("black"), (x, 0), (x, self.height))
         for y in range(0, self.height, self.cell_size):
             pygame.draw.line(self.screen, pygame.Color("black"), (0, y), (self.width, y))
 
     def draw_grid(self) -> None:
+        """Filling the grid with colors"""
         grid = self.life.curr_generation
         for row in range(self.cell_height):
             for column in range(self.cell_width):
@@ -52,10 +52,10 @@ class GUI(UI):
                 )
 
     def run(self) -> None:
-        """ "
-        space - поставить на паузу / снять с паузы
-        нажатие ЛКМ по квадратику меняет его цвет
-        s - сохранить файл
+        """
+        Pressing "space" button - pause/play
+        Pressing the left mouse button - change the color of the square
+        Pressing "s" button - save file
         """
         pygame.init()
         clock = pygame.time.Clock()
@@ -88,7 +88,7 @@ class GUI(UI):
 
     def draw_update_grid(self, mouse_pos: tp.Tuple[int, int]) -> None:
         """
-        Изменить цвет квадратика сразу после нажатия
+        Change square color
         """
         width, height = mouse_pos
         row = height // self.cell_size
@@ -110,7 +110,7 @@ class GUI(UI):
 
     def is_paused(self) -> bool:
         """
-        Поставить игру на паузу
+        Pause the game
         """
         pause = True
         while pause:
@@ -134,10 +134,10 @@ if __name__ == "__main__":
     parser.add_argument("--width", dest="width", type=int, default="500")
     parser.add_argument("--max-generations", dest="max_generations", type=int, default="200")
     parser.add_argument(
-        "--from-file", dest="from_file", type=str, default="", help="считать этот файл"
+        "--from-file", dest="from_file", type=str, default="", help="read from this file"
     )
     parser.add_argument(
-        "--to-file", dest="to_file", type=str, default="grid.txt", help="записать в этот файл"
+        "--to-file", dest="to_file", type=str, default="grid.txt", help="write to this file"
     )
     parser.add_argument("--cell-size", dest="cell_size", type=int, default="10")
     parser.add_argument("--speed", dest="speed", type=int, default="10")
