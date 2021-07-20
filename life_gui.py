@@ -150,5 +150,5 @@ if __name__ == "__main__":
         )
     else:
         life = GameOfLife.from_file(pathlib.Path(arguments.from_file))
-    game = GUI(life)
+    game = GUI(life, arguments.cell_size, arguments.speed)
     game.run()
